@@ -1,0 +1,34 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="mb-3">Coupons Issued by "{{ store.name }}"</h3>
+
+    {% if coupons %}
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Customer</th>
+                <th>Coupon Code</th>
+                <th>Issued At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coupon in coupons %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ coupon.user.username }}</td>
+                <td>{{ coupon.code }}</td>
+                <td>{{ coupon.issued_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No coupons have been issued by this store yet.</p>
+    {% endif %}
+
+    <a href="{% url 'dashboard_admin' %}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}

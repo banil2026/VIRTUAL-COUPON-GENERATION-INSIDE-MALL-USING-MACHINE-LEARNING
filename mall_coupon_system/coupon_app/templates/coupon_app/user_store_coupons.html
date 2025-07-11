@@ -1,0 +1,42 @@
+{% extends 'coupon_app/dashboard_user.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Coupons Issued by Your Store</h2>
+        <p class="text-muted">Here are all the coupons you’ve received from this store.</p>
+    </div>
+
+    {% if coupons %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Store Name</th>
+                    <th scope="col">Coupon Code</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Issued At</th>
+                    <th scope="col">Validity Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coupon in coupons %}
+                <tr>
+                    <td class="fw-semibold">{{ coupon.store.name }}</td>
+                    <td class="text-primary">{{ coupon.code }}</td>
+                    <td class="text-success fw-bold">₹{{ coupon.amount }}</td>
+                    <td>{{ coupon.issued_at }}</td>
+                    <td>{{ coupon.validity_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center mt-4">
+        No coupons found for your store.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

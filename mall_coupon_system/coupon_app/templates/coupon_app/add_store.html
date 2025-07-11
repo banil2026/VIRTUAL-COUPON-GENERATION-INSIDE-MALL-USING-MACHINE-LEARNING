@@ -1,0 +1,28 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container mt-5 p-4 rounded shadow" style="max-width: 600px; background-color: rgba(255, 255, 255, 0.95);">
+    <h2 class="text-center text-primary mb-4">🏪 Add New Store</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="id_name" class="form-label">Store Name</label>
+            <input type="text" name="name" class="form-control" id="id_name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="id_password" required>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Add Store</button>
+    </form>
+</div>
+{% endblock %}

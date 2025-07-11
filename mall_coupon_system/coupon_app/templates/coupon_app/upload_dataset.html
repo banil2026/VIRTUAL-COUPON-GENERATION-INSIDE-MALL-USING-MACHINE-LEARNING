@@ -1,0 +1,34 @@
+{% extends 'coupon_app/dashboard_store.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card p-4 bg-light bg-opacity-75 shadow-sm">
+        <h2 class="mb-4 text-center text-primary">📂 Upload Dataset to Train Coupon Model</h2>
+
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="id_dataset_file" class="form-label fw-semibold">Select CSV File</label>
+                <input type="file" name="dataset_file" class="form-control" id="id_dataset_file" required>
+                <div class="form-text">Only CSV files are supported.</div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-3">
+                🚀 Train Model
+            </button>
+        </form>
+
+        {% if messages %}
+            <div class="mt-4">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} text-center">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

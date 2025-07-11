@@ -1,0 +1,49 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h3 class="fw-bold text-primary">Coupons Issued by {{ store.name }}</h3>
+        <p class="text-muted">Below is a list of all coupons this store has issued to users.</p>
+    </div>
+
+    {% if coupons %}
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Coupon Code</th>
+                    <th>Amount</th>
+                    <th>Issued At</th>
+                    <th>Validity Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coupon in coupons %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td class="text-primary fw-semibold">{{ coupon.code }}</td>
+                    <td class="text-success fw-bold">₹{{ coupon.amount }}</td>
+                    <td>{{ coupon.issued_at }}</td>
+                    <td>{{ coupon.validity_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center mt-4">
+        No coupons have been issued by this store yet.
+    </div>
+    {% endif %}
+
+    <div class="text-center">
+        <a href="{% url 'dashboard_admin' %}" 
+   class="btn btn-outline-primary mt-4 px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center">
+   <i class="bi bi-arrow-left me-2"></i> Back to Dashboard
+</a>
+
+    </div>
+</div>
+{% endblock %}

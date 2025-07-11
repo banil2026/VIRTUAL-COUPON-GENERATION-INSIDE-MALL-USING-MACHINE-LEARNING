@@ -1,0 +1,97 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3 class="text-center mb-4 text-white bg-dark py-2 rounded">🏬 Store Dashboard</h3>
+
+    <!-- Action Buttons -->
+    <div class="d-flex justify-content-between flex-wrap gap-2 mb-4">
+        <a href="{% url 'upload_dataset' %}" class="btn btn-secondary">📤 Upload Dataset</a>
+        <a href="{% url 'predict_coupon' %}" class="btn btn-info">🎯 Predict Coupon</a>
+        <a href="{% url 'logout_store' %}" class="btn btn-danger">🚪 Logout</a>
+    </div>
+
+    <!-- Add Customer Section -->
+    <div class="card p-4 bg-light bg-opacity-75 mb-4 shadow-sm">
+        <h5 class="mb-3">➕ Add Customer by Username</h5>
+        <form method="POST" action="{% url 'add_customer' %}">
+            {% csrf_token %}
+            <div class="row g-2 align-items-center">
+                <div class="col-md-8">
+                    <input type="text" name="username" class="form-control" placeholder="Enter customer username" required>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">Add Customer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} text-center shadow-sm">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Customer Table -->
+    <div class="card p-3 bg-white bg-opacity-75 mb-4 shadow-sm">
+        <h5 class="mb-3">🧍 Customers Who Purchased in This Store</h5>
+        <table class="table table-bordered table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Customer Username</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in customers %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>
+                        <a href="{% url 'issue_coupon' user.id %}" class="btn btn-sm btn-success">Issue Coupon</a>
+                        <a href="{% url 'delete_user_from_store' user.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center">No users found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Issued Coupons Table -->
+    <div class="card p-3 bg-white bg-opacity-75 shadow-sm">
+        <h5 class="mb-3">🎟️ Issued Coupons</h5>
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Coupon Code</th>
+                    <th>Amount</th>
+                    <th>Issued At</th>
+                    <th>Validity Date</th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for coupon in issued_coupons %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ coupon.user.user.username }}</td>
+                    <td>{{ coupon.code }}</td>
+                    <td>₹{{ coupon.amount }}</td>
+                    <td>{{ coupon.issued_at }}</td>
+                    <td>{{ coupon.validity_date }}</td>
+                    
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center">No coupons issued yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 bg-light bg-opacity-75">
+        <h2 class="text-center text-success mb-4">🎁 Issue Coupon to <span class="text-primary">{{ user.username }}</span></h2>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Coupon Code</label>
+                {{ form.code }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Amount (₹)</label>
+                {{ form.amount }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Validity Date</label>
+                {{ form.validity_date }}
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-success w-50 me-2">✅ Issue Coupon</button>
+                <a href="{% url 'dashboard_store' %}" class="btn btn-outline-secondary w-50">❌ Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

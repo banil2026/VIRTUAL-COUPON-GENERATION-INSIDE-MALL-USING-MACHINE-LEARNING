@@ -1,0 +1,73 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h3 class="fw-bold text-primary">Welcome, {{ user.username }}!</h3>
+        <p class="lead text-muted">Explore our mall and discover exciting coupons from your favorite stores.</p>
+    </div>
+
+    <!-- Search and Logout -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-9">
+            <form method="get" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search store by name..." value="{{ request.GET.search }}">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+            </form>
+        </div>
+        <div class="col-md-3 text-md-end mt-3 mt-md-0">
+            <a href="{% url 'logout' %}" class="btn btn-danger w-100 w-md-auto">Logout</a>
+        </div>
+    </div>
+
+    <!-- Store List -->
+    <h5 class="mb-3 fw-semibold">Available Stores:</h5>
+    <div class="row">
+        {% for store in stores %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-dark">{{ store.name }}</h5>
+                    <a href="{% url 'view_user_coupons' store.id %}" class="btn btn-primary mt-3">View Coupons</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No stores found.</p>
+        {% endfor %}
+    </div>
+
+    <!-- User Coupons -->
+    <h5 class="mt-5 fw-semibold">My Issued Coupons:</h5>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Store</th>
+                    <th>Coupon Code</th>
+                    <th>Amount</th>
+                    <th>Issued At</th>
+                    <th>Validity Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coupon in user_coupons %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ coupon.store.name }}</td>
+                    <td>{{ coupon.code }}</td>
+                    <td>₹{{ coupon.amount }}</td>
+                    <td>{{ coupon.issued_at }}</td>
+                    <td>{{ coupon.validity_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-muted">No coupons available yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

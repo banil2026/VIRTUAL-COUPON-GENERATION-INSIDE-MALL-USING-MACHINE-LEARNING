@@ -1,0 +1,38 @@
+{% extends 'coupon_app/dashboard_user.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-success">Coupons Issued by Store</h2>
+        <p class="text-muted">Below are the coupons you’ve received from this store.</p>
+    </div>
+
+    {% if coupons %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Store Name</th>
+                    <th>Coupon Code</th>
+                    <th>Issued At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for coupon in coupons %}
+                <tr>
+                    <td>{{ coupon.store.name }}</td>
+                    <td class="fw-semibold text-primary">{{ coupon.code }}</td>
+                    <td>{{ coupon.issued_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center">
+        No coupons have been issued to you by this store yet.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

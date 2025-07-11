@@ -1,0 +1,31 @@
+{% extends 'coupon_app/base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="col-md-6 p-4 rounded shadow bg-white bg-opacity-75">
+        <h4 class="text-center text-dark mb-4">🏬 Store Login</h4>
+
+        <form method="post" action="{% url 'login_store' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Store Username</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter store username" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Store Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Enter store password" required>
+            </div>
+
+            <button type="submit" class="btn btn-warning w-100">🔐 Login</button>
+
+            {% if error %}
+                <div class="alert alert-danger mt-3 text-center">
+                    {{ error }}
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+{% endblock %}
