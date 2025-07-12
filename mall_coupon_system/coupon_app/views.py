@@ -310,11 +310,11 @@ def predict_coupon_view(request):
 
             # Determine coupon value based on visit count
             if visits <= 3:
-                final_amount = round(amount * 0.10, 2)
+                final_amount = round(amount * 0.05, 2)
             elif 4 <= visits <= 7:
-                final_amount = round(amount * 0.20, 2)
+                final_amount = round(amount * 0.07, 2)
             else:
-                final_amount = round(amount * 0.30, 2)
+                final_amount = round(amount * 0.09, 2)
 
             return render(request, 'coupon_app/predict_coupon.html', {
                 'amount': amount,
